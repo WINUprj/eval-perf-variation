@@ -1,0 +1,36 @@
+# =============== Meta config for experiment ===============
+experiment_name = "dqn_atari_5"
+debug = false
+wandb = false
+device = "cuda"
+seed = 42
+n_seeds = 100
+n_steps = 50_000_000
+env_change = false
+net_change = false
+
+# =============== Experiment config ===============
+experiment_type = [ "DQNAtari" ]
+
+step_size = 1e-4
+n_bins = 100
+learning_starts = 80_000
+batch_size = 32
+gamma = 0.99
+target_update_frequency = 1_000
+train_frequency = 4
+tau = 1.0
+buffer_size = 1_000_000
+start_e = 1
+end_e = 0.01
+exploration_fraction = 0.1
+
+# =============== Task config ===============
+[ task ]
+name = [
+    ["atari", "ALE/BattleZone-v5"],
+    ["atari", "ALE/DoubleDunk-v5"],
+    ["atari", "ALE/NameThisGame-v5"],
+    ["atari", "ALE/Phoenix-v5"],
+    ["atari", "ALE/Qbert-v5"],
+]

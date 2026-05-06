@@ -1,0 +1,40 @@
+# =============== Meta config for experiment ===============
+experiment_name = "rainbow_atari_5"
+debug = false
+wandb = false
+device = "cuda"
+seed = 42
+n_seeds = 100
+n_steps = 50_000_000
+env_change = false
+net_change = false
+
+# =============== Experiment config ===============
+experiment_type = [ "RainbowAtariSave" ]
+
+step_size = 0.0000625
+n_bins = 100
+n_atoms = 51
+v_min = -10
+v_max = 10
+gamma = 0.99
+psteps = 3
+palpha = 0.5
+pbeta = 0.4
+peps = 1e-6
+batch_size = 32
+target_update_frequency = 8_000
+tau = 1.0
+buffer_size = 1_000_000
+learning_starts = 80_000
+train_frequency = 4
+
+# =============== Task config ===============
+[ task ]
+name = [
+    ["atari", "ALE/BattleZone-v5"],
+    ["atari", "ALE/DoubleDunk-v5"],
+    ["atari", "ALE/NameThisGame-v5"],
+    ["atari", "ALE/Phoenix-v5"],
+    ["atari", "ALE/Qbert-v5"],
+]

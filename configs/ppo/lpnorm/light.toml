@@ -1,0 +1,128 @@
+# =============== Meta config for experiment ===============
+experiment_name = "ppo_lpnorm"
+device = "cpu"
+seed = 42
+n_seeds = 100
+n_steps = 10_000_000
+
+# =============== Experiment config ===============
+experiment_type = [ "PPO" ]
+
+# Optimization-related
+update_freq = 8192
+n_epochs = 10
+minibatch_size = 256
+clip_eps = 0.2
+value_coef = 0.5
+max_grad_norm = 0.5
+entropy_coef = 0.0
+
+# GAE-related
+gae_gamma = 0.99
+gae_lambda = 0.95
+
+# Postprocessing-related
+n_bins = 100
+
+# =============== Task config ===============
+[ task ]
+name = [
+    ["dmc", "acrobot-swingup"],
+    ["dmc", "acrobot-swingup_sparse"],
+    ["dmc", "ball_in_cup-catch"],
+    ["dmc", "cartpole-balance"],
+    ["dmc", "cartpole-balance_sparse"],
+    ["dmc", "cartpole-swingup"],
+    ["dmc", "cartpole-swingup_sparse"],
+    ["dmc", "cartpole-two_poles"],
+    ["dmc", "cartpole-three_poles"],
+    ["dmc", "cheetah-run"],
+    ["dmc", "finger-spin"],
+    ["dmc", "finger-turn_easy"],
+    ["dmc", "finger-turn_hard"],
+    ["dmc", "fish-upright"],
+    ["dmc", "fish-swim"],
+    ["dmc", "hopper-stand"],
+    ["dmc", "hopper-hop"],
+    ["dmc", "manipulator-bring_ball"],
+    ["dmc", "manipulator-bring_peg"],
+    ["dmc", "manipulator-insert_ball"],
+    ["dmc", "manipulator-insert_peg"],
+    ["dmc", "pendulum-swingup"],
+    ["dmc", "point_mass-easy"],
+    ["dmc", "point_mass-hard"],
+    ["dmc", "reacher-easy"],
+    ["dmc", "reacher-hard"],
+    ["dmc", "stacker-stack_2"],
+    ["dmc", "stacker-stack_4"],
+    ["dmc", "swimmer-swimmer6"],
+    ["dmc", "swimmer-swimmer15"],
+    ["dmc", "walker-stand"],
+    ["dmc", "walker-walk"],
+    ["dmc", "walker-run"],
+    ["gym", "Ant-v4"],
+    ["gym", "Hopper-v4"],
+    ["gym", "Walker2d-v4"],
+    ["gym", "Swimmer-v4"],
+    ["gym", "Reacher-v4"],
+    ["gym", "Pusher-v4"],
+    ["gym", "InvertedPendulum-v4"],
+    ["gym", "InvertedDoublePendulum-v4"],
+    ["gym", "HalfCheetah-v4"],
+]
+
+# =============== Learner config ===============
+[ learner ]
+    pnorm = true
+
+    [ learner.actor ]
+
+        [ learner.actor.encoder ]
+            arch_name = "LayernormTanhNetworkWithHook"
+
+            [ learner.actor.encoder.kwargs ]
+                layer_sizes = [ [-1, 256, 256] ]
+                bias = true
+                activate_last = true
+
+        [ learner.actor.predictor ]
+            arch_name = "FCTanhNetworkWithHook"
+
+            [ learner.actor.predictor.kwargs ]
+                layer_sizes = [ [256, -1] ]
+                bias = true
+                activate_last = false
+
+    [ learner.critic ]
+
+        [ learner.critic.encoder ]
+            arch_name = "LayernormTanhNetworkWithHook"
+
+            [ learner.critic.encoder.kwargs ]
+                layer_sizes = [ [-1, 256, 256 ]]
+                bias = true
+                activate_last = true
+
+        [ learner.critic.predictor ]
+            arch_name = "FCTanhNetworkWithHook"
+
+            [ learner.critic.predictor.kwargs ]
+                layer_sizes = [ [ 256, 1 ] ]
+                bias = true
+                activate_last = false
+
+# =============== Optimizer config ===============
+[ optim ]
+step_size = 3e-4
+
+[ optim.actor ]
+name = "Adam"
+[ optim.actor.kwargs]
+
+[ optim.critic ]
+name = "Adam"
+[ optim.critic.kwargs ]
+
+# =============== Optimizer config ===============
+[ replay_buffer ]
+size = 1_000_005

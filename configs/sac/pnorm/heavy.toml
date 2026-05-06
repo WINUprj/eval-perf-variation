@@ -1,0 +1,92 @@
+# =============== Meta config for experiment ===============
+experiment_name = "sac_pnorm"
+device = "cpu"
+seed = 42
+n_seeds = 100
+n_steps = 1_000_000
+
+# =============== Experiment config ===============
+experiment_type = [ "SAC" ]
+sample_size = 256
+learning_starts = 5000
+init_temperature = 1
+gamma = 0.99
+policy_freq = 2
+target_network_freq = 1
+tau = 0.005
+action_repetition = 1
+n_updates = 1
+
+# Postprocessing-related
+n_bins = 100
+
+# =============== Task config ===============
+[ task ]
+name = [
+    ["dmc", "dog-stand"],
+    ["dmc", "dog-walk"],
+    ["dmc", "dog-trot"],
+    ["dmc", "dog-run"],
+    ["dmc", "dog-fetch"],
+    ["dmc", "humanoid-walk"],
+    ["dmc", "humanoid-run"],
+    ["dmc", "humanoid-run_pure_state"],
+    ["dmc", "humanoid_CMU-stand"],
+    ["dmc", "humanoid_CMU-walk"],
+    ["dmc", "humanoid_CMU-run"],
+    ["dmc", "humanoid-stand"],
+    ["dmc", "quadruped-walk"],
+    ["dmc", "quadruped-run"],
+    ["dmc", "quadruped-fetch"],
+    ["gym", "HumanoidStandup-v4"],
+    ["gym", "Humanoid-v4"],
+]
+
+# =============== Learner config ===============
+[ learner ]
+    pnorm = true
+
+        [ learner.actor ]
+            log_std_min = -5
+            log_std_max = 2
+
+            [ learner.actor.encoder ]
+                arch_name = "FCReLUNetworkWithHook"
+
+                [ learner.actor.encoder.kwargs ]
+                    layer_sizes = [ [-1, 256, 256 ] ]
+                    bias = true
+                    activate_last = true
+
+        [ learner.critic ]
+            [ learner.critic.encoder ]
+                arch_name = "FCReLUNetworkWithHook"
+
+                [ learner.critic.encoder.kwargs ]
+                    layer_sizes = [ [-1, 256, 256 ]]
+                    bias = true
+                    activate_last = true
+
+            [ learner.critic.predictor ]
+                arch_name = "FCReLUNetworkWithHook"
+
+                [ learner.critic.predictor.kwargs ]
+                    layer_sizes = [ [ 256, 1 ] ]
+
+
+# =============== Optimizer config ===============
+[ optim ]
+step_size = 3e-4
+
+[ optim.actor ]
+name = "Adam"
+[ optim.actor.kwargs]
+
+[ optim.critic ]
+name = "Adam"
+[ optim.critic.kwargs ]
+lr = 1e-3
+
+# =============== Optimizer config ===============
+[ replay_buffer ]
+size = 1_000_005
