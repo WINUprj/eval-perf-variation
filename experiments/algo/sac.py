@@ -24,6 +24,7 @@ from src.utils import (
 from ..experiment import Experiment
 
 
+### Adopted from CleanRL: https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/sac_continuous_action.py ###
 # ---------- SAC-related components ---------- #
 class SACActor(nn.Module):
     def __init__(self, env, actor_config, pnorm=False):

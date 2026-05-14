@@ -5,7 +5,6 @@ import os
 from pathlib import Path
 import time
 
-import pickle
 import torch
 from torch import nn
 from torch.nn import functional as F
@@ -24,6 +23,7 @@ from src.utils import (
 from ..experiment import Experiment
 
 
+### Adopted from CleanRL: https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/rainbow_atari.py ###
 class NoisyLinear(nn.Module):
     def __init__(self, in_features, out_features, std_init=0.5):
         super().__init__()

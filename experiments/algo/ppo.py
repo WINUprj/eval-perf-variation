@@ -1,5 +1,3 @@
-import datetime
-import gc
 from pathlib import Path
 import time
 
@@ -25,6 +23,7 @@ from src.utils import (
 from ..experiment import Experiment
 
 
+### Adopted from CleanRL: https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/ppo_continuous_action.py ###
 # ---------- PPO-related components ---------- #
 class PPOActor(nn.Module):
     def __init__(self, env, actor_config, pnorm=False) -> None:

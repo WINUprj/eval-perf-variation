@@ -24,6 +24,7 @@ from src.utils import (
 from ..experiment import Experiment
 
 
+### Adopted from CleanRL: https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/dqn_atari.py ###
 class QNetwork(nn.Module):
     def __init__(self, env):
         super().__init__()
