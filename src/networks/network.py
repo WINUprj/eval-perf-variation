@@ -1,13 +1,9 @@
-from collections import OrderedDict, defaultdict
+from collections import defaultdict
 from functools import partial
 from typing import Sequence
 
-import numpy as np
 import torch
 from torch import nn
-from torch.distributions import Normal
-from torch.nn import functional as F
-
 
 ### Basic block of architectures ###
 class FCReLUNetwork(nn.Sequential):

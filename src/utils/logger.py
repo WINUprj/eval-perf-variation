@@ -1,11 +1,8 @@
-import datetime
 from pathlib import Path
 
 import numpy as np
 import torch
 import toml
-
-from src.utils.util import mkdir
 
 ### Logger/Tracker
 class Logger:

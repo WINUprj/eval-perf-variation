@@ -1,6 +1,5 @@
 import logging
 import os
-import re
 
 import ale_py
 from dm_control import suite
@@ -16,7 +15,7 @@ from src.utils import ConfigWrapper
 gym.register_envs(ale_py)
 
 
-def make_env(config: ConfigWrapper) -> gym.Env:
+def make_env(config: ConfigWrapper) -> Env:
     """
     Function to make RL environment.
 
@@ -37,7 +36,7 @@ def make_env(config: ConfigWrapper) -> gym.Env:
     return env
 
 
-def make_atari_env(config: ConfigWrapper) -> gym.Env:
+def make_atari_env(config: ConfigWrapper) -> Env:
     """
     Function to make ALE environment.
 
@@ -256,25 +255,3 @@ class DMCGym(Env):
         width = width or self.render_width
         camera_id = camera_id or self.render_camera_id
         return self._env.physics.render(height=height, width=width, camera_id=camera_id)
-
-
-if __name__ == "__main__":
-    from src.utils import wrap_config_dict
-    config = {
-        "experiment_type": "SACBasic",
-        "task": {
-            "name": ["dmc", "lqr-lqr_6_2"]
-        }
-    }
-    config = wrap_config_dict(config)
-
-    task = make_env(config)
-    action_space = task.action_space
-    task.reset()
-    for i in range(10000):
-        a = np.random.uniform(low=-1, high=1, size=action_space.shape)
-        _, _, terminations, truncations, infors = task.step(a)
-        done = terminations or truncations
-        if done:
-            print("done!")
-            break
