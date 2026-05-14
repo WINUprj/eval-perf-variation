@@ -95,6 +95,7 @@ Haruto Tanaka - haruto@ualberta.ca
 ## Acknowledgments
 
 * [CleanRL](https://github.com/vwxyzjn/cleanrl)
+* [dmc2gymnasium](https://github.com/imgeorgiev/dmc2gymnasium/tree/main)
+* [Explorer](https://github.com/qlan3/Explorer)
 * [TD-MPC](https://github.com/nicklashansen/tdmpc)
 * [TD-MPC2](https://github.com/nicklashansen/tdmpc2)
-* [Explorer](https://github.com/qlan3/Explorer)
