@@ -1,11 +1,11 @@
-# Evaluating Performance Variation in Deep Reinforcement Learning
+# Performance Variation in Deep Reinforcement Learning
 
 ![Performance Variation Plots](./images/ppo_sac_tdmpc_tdmpc2_variation.png)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is an official code repository for the paper [Evaluating Performance Variation in Deep Reinforcement Learning]().
+This is an official code repository for the paper [Evaluating Performance Variation in Deep Reinforcement Learning](https://arxiv.org/abs/2606.06746).
 We provide a minimal codes to produce our proposed methods, which are
 - Min-max normalized 90% interpercentile range (IPR-90): Quantitative measurement of performance variation in deep RL
 - Run-wise percentile highlighting (RPH): Visualization method to capture performance variation over the learning curves.
@@ -84,6 +84,20 @@ To run these, follow the instructions of the original TD-MPC/TD-MPC2 codebases (
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 This work is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). See `LICENSE.txt` for more information.
+
+## Citation
+
+If you find this work useful, please cite the following paper:
+
+```bib
+@article{tanaka2026perforamnce,
+    title={Performance Variation in Deep Reinforcement Learning},
+    author={Tanaka, Haruto and Mahmood, A. Rupam},
+    journal={CoRR},
+    volume={abs/2606.06746},
+    year={2026}
+}
+```
 
 <!-- CONTACT -->
 ## Contact
