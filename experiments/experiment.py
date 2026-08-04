@@ -12,7 +12,7 @@ class Experiment:
 
         self.root_dir = root_dir
         self.exp_dir = self.root_dir / config.experiment_name
-        self.save_dir = self.exp_dir / ("debug" if config.debug else "results") / self.session_name / f"{str(config.seed)}"
+        self.save_dir = self.exp_dir / "results" / self.session_name / f"{str(config.seed)}"
 
         print(f"Root directory is: {self.root_dir.as_posix()}")
 

@@ -25,7 +25,6 @@ if __name__ == "__main__":
     parser.add_argument("--config_file", "-c", type=str, help="Path to the configuration file.")
     parser.add_argument("--config_idx", type=int, default=None, help="Index of the config file.")
     parser.add_argument("--root_dir", type=str, default=".", help="Home directory for saving files.")
-    parser.add_argument("--num_resub", type=int, default=0, help="Counter for the number of resubmissions")
     args = parser.parse_args()
     root_dir = Path(args.root_dir)
 
@@ -59,5 +58,5 @@ if __name__ == "__main__":
         cur_config_dict["config_idx"] = args.config_idx
         config = wrap_config_dict(cur_config_dict)
 
-        manager = getattr(experiments, config.experiment_type)(config, root_dir, dir_name, args.num_resub)
+        manager = getattr(experiments, config.experiment_type)(config, root_dir, dir_name)
         manager.run_experiment()

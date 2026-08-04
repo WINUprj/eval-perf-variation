@@ -4,6 +4,7 @@ import time
 from typing import Union
 
 import torch
+from torch import nn
 from torch.nn import functional as F
 import numpy as np
 
@@ -158,12 +159,7 @@ class SAC(Experiment):
         rb_config = self.config.replay_buffer
 
         # Initialize task
-        if self.config.env_change:
-            self.env_seed = self.config.config_idx
-        elif self.config.net_change:
-            self.env_seed = 1
-        else:
-            self.env_seed = np.random.randint(low=0, high=int(1e6))
+        self.env_seed = np.random.randint(low=0, high=int(1e6))
 
         self.config["env_seed"] = self.env_seed
         self.task = make_env(self.config)
@@ -190,22 +186,18 @@ class SAC(Experiment):
         if "lr" not in critic_optim_config["kwargs"]:
             critic_optim_config["kwargs"]["lr"] = self.step_size
 
-        optim_prefix = "Custom"
-        actor_optim_name = optim_prefix + self.config.optim.actor.name
-        self.actor_opt = getattr(src.optimizers, actor_optim_name)(
+        self.actor_opt = getattr(torch.optim, self.config.optim.actor.name)(
             list(self.actor.parameters()),
-            default_lr=self.step_size,
+            lr=self.step_size,
         )
-        self.actor_instant_counter = 0
 
-        critic_optim_name = optim_prefix + self.config.optim.critic.name
-        self.q1_opt = getattr(src.optimizers, critic_optim_name)(
+        self.q1_opt = getattr(torch.optim, self.config.optim.critic.name)(
             self.q1_params,
-            default_lr=self.step_size,
+            lr=self.step_size,
         )
-        self.q2_opt = getattr(src.optimizers, critic_optim_name)(
+        self.q2_opt = getattr(torch.optim, self.config.optim.critic.name)(
             self.q2_params,
-            default_lr=self.step_size,
+            lr=self.step_size,
         )
 
         # Replay buffer

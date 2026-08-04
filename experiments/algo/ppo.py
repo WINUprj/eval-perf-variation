@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 import time
 
@@ -156,12 +157,12 @@ class PPO(Experiment):
 
         self.actor_opt = getattr(torch.optim, self.config.optim.actor.name)(
             list(self.actor.parameters()),
-            default_lr=self.step_size,
+            lr=self.step_size,
         )
 
         self.critic_opt = getattr(torch.optim, self.config.optim.critic.name)(
             list(self.critic.parameters()),
-            default_lr=self.step_size,
+            lr=self.step_size,
         )
 
         # Flag whether the parameter update uses Adam (so one can measure inner product between increment and gradient)
@@ -169,8 +170,9 @@ class PPO(Experiment):
         self.measure_update_inner_critic = "adam" in self.config.optim.critic.name.lower()
 
         ### Initialize replay buffer ###
+        self.update_freq = self.config.update_freq
         self.rb_keys = ["obs", "logprob", "action", "value", "reward", "done"]
-        self.rb = ReplayBuffer(min(self.config.update_freq + 10, 1_000_000), self.rb_keys)
+        self.rb = ReplayBuffer(min(self.update_freq + 10, 1_000_000), self.rb_keys)
 
         ### Stat tracker and logger ###
         self.bin_size = self.config.n_steps // self.config.n_bins
@@ -429,8 +431,6 @@ class PPO(Experiment):
                 hours, mins ,secs = duration(st_time)
                 msg = f"Timestep {t} on session {self.session_name}, seed {self.config.seed}: {hours} hrs {mins} mins {secs} sec."
                 self.logger.write({f"{t}": msg})
-
-            t += 1
 
         # Save and record the results
         self.binned_statistics.save_non_empty()

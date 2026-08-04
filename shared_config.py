@@ -62,4 +62,4 @@ class Metrics:
     critic_instant_inner_prod: str = "critic_instant_inner_prod"
     critic_sustained_inner_prod: str = "critic_sustained_inner_prod"
     critic_sustained_counter: str = "critic_sustained_counter"
-    critic_ss: str = "critic_step_size
+    critic_ss: str = "critic_step_size"
